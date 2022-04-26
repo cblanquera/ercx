@@ -1,0 +1,33 @@
+{
+  "name": "ercx",
+  "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "https://github.com/cblanquera/ercx",
+  "bugs": {
+    "url": "https://github.com/cblanquera/ercx/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cblanquera/ercx.git"
+  },
+  "files": [
+    "contracts",
+    "!/contracts/mocks"
+  ],
+  "scripts": {
+    "test": "hardhat test"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "2.0.2",
+    "@nomiclabs/hardhat-etherscan": "2.1.8",
+    "@nomiclabs/hardhat-waffle": "2.0.1",
+    "@openzeppelin/contracts": "4.4.2",
+    "chai": "4.3.4",
+    "dotenv": "10.0.0",
+    "ethereum-waffle": "3.4.0",
+    "ethers": "5.4.1",
+    "hardhat": "2.4.3",
+    "hardhat-contract-sizer": "2.4.0",
+    "hardhat-gas-reporter": "1.0.6"
+  }
+}
