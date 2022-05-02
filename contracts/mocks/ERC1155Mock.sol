@@ -18,6 +18,34 @@ contract ERC1155Mock is
   ERC1155Supply 
 {
   /**
+   * @dev Creates `amount` new tokens for `to`.
+   */
+  function mint(address to, uint256 tokenId, uint256 amount) public virtual {
+    _mint(to, tokenId, amount, "");
+  }
+
+  /**
+   * @dev Pauses all token transfers.
+   */
+  function pause() public virtual {
+    _pause();
+  }
+
+  /**
+   * @dev Adds or revokes an operator
+   */
+  function setOperator(address operator, bool add) public {
+    _setOperator(operator, add);
+  }
+
+  /**
+   * @dev Unpauses all token transfers.
+   */
+  function unpause() public virtual {
+    _unpause();
+  }
+
+  /**
    * @dev The contract must not be paused.
    */
   function _beforeTokenTransfer(

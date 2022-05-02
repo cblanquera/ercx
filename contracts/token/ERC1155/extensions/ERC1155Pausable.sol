@@ -23,6 +23,6 @@ abstract contract ERC1155Pausable is ERC1155, Pausable {
   ) internal virtual override {
     super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
 
-    require(!paused(), "ERC1155Pausable: token transfer while paused");
+    if(paused()) revert InvalidCall();
   }
 }

@@ -37,12 +37,12 @@ abstract contract ERC721 is Context, ERC165, IERC721 {
   }
 
   modifier isToken(uint256 tokenId) {
-    if (_owners[tokenId] != address(0)) revert InvalidCall();
+    if (_owners[tokenId] == address(0)) revert InvalidCall();
     _;
   }
 
   modifier isNotToken(uint256 tokenId) {
-    if (_owners[tokenId] == address(0)) revert InvalidCall();
+    if (_owners[tokenId] != address(0)) revert InvalidCall();
     _;
   }
 

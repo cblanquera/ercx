@@ -27,6 +27,34 @@ contract ERC721Mock is
   ) ERC721MetadataStorage(name_, symbol_) {}
 
   /**
+   * @dev Creates `amount` new tokens for `to`.
+   */
+  function mint(address to, uint256 tokenId) public virtual {
+    _mint(to, tokenId);
+  }
+
+  /**
+   * @dev Pauses all token transfers.
+   */
+  function pause() public virtual {
+    _pause();
+  }
+
+  /**
+   * @dev Adds or revokes an operator
+   */
+  function setOperator(address operator, bool add) public {
+    _setOperator(operator, add);
+  }
+
+  /**
+   * @dev Unpauses all token transfers.
+   */
+  function unpause() public virtual {
+    _unpause();
+  }
+
+  /**
    * @dev Hook that is called before a set of serially-ordered token ids 
    * are about to be transferred. This includes minting.
    */

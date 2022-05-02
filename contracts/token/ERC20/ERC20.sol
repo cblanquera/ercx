@@ -6,8 +6,6 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 
-//import "./IERC20Metadata.sol";
-
 // ============ Errors ============
 
 error InvalidCall();
@@ -62,7 +60,9 @@ abstract contract ERC20 is Context, IERC20Metadata {
   // ============ Approval Methods ============
 
   /**
-   * @dev See {IERC20-allowance}.
+   * @dev Returns the remaining number of tokens that `spender` will be
+   * allowed to spend on behalf of `owner` through {transferFrom}. This
+   * is zero by default.
    */
   function allowance(
     address owner, 
@@ -72,7 +72,8 @@ abstract contract ERC20 is Context, IERC20Metadata {
   }
 
   /**
-   * @dev See {IERC20-approve}.
+   * @dev Sets `amount` as the allowance of `spender` over the caller's 
+   * tokens.
    */
   function approve(
     address spender, 
