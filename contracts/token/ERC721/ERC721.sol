@@ -166,7 +166,7 @@ abstract contract ERC721 is Context, ERC165, IERC721 {
     address owner,
     address operator, 
     bool approved
-  ) public virtual {
+  ) internal virtual {
     if (owner == operator) revert InvalidCall();
     _operatorApprovals[owner][operator] = approved;
     emit ApprovalForAll(owner, operator, approved);

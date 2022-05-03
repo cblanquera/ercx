@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.0;
 
+import "../token/ERC1155/extensions/ERC1155Approvable.sol";
 import "../token/ERC1155/extensions/ERC1155Burnable.sol";
 import "../token/ERC1155/extensions/ERC1155MetadataURI.sol";
 import "../token/ERC1155/extensions/ERC1155Operators.sol";
@@ -10,6 +11,7 @@ import "../token/ERC1155/extensions/ERC1155Permit.sol";
 import "../token/ERC1155/extensions/ERC1155Supply.sol";
 
 contract ERC1155Mock is 
+  ERC1155Approvable,
   ERC1155Burnable, 
   ERC1155MetadataURI, 
   ERC1155Operators,
@@ -43,6 +45,19 @@ contract ERC1155Mock is
    */
   function unpause() public virtual {
     _unpause();
+  }
+
+  /**
+   * @dev Approve `operator` to operate on all of `owner` tokens
+   *
+   * Emits a {ApprovalForAll} event.
+   */
+  function _setApprovalForAll(
+    address owner,
+    address operator,
+    bool approved
+  ) internal virtual override(ERC1155, ERC1155Approvable) {
+    super._setApprovalForAll(owner, operator, approved);
   }
 
   /**

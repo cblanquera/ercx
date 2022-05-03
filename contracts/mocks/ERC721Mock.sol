@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.0;
 
+import "../token/ERC721/extensions/ERC721Approvable.sol";
 import "../token/ERC721/extensions/ERC721BaseTokenURI.sol";
 import "../token/ERC721/extensions/ERC721Burnable.sol";
 import "../token/ERC721/extensions/ERC721ContractURIStorage.sol";
@@ -12,6 +13,7 @@ import "../token/ERC721/extensions/ERC721Permit.sol";
 import "../token/ERC721/extensions/ERC721Supply.sol";
 
 contract ERC721Mock is 
+  ERC721Approvable,
   ERC721BaseTokenURI,
   ERC721Burnable,
   ERC721ContractURIStorage,
@@ -52,6 +54,30 @@ contract ERC721Mock is
    */
   function unpause() public virtual {
     _unpause();
+  }
+
+  /**
+   * @dev Checks to see if appprovable before approving
+   */
+  function _approve(
+    address to,
+    uint256 tokenId,
+    address owner
+  ) internal virtual override(ERC721, ERC721Approvable) {
+    super._approve(to, tokenId, owner);
+  }
+
+  /**
+   * @dev Approve or remove `operator` as an operator for the caller.
+   * Operators can call {transferFrom} or {safeTransferFrom} for any 
+   * token owned by the caller.
+   */
+  function _setApprovalForAll(
+    address owner,
+    address operator, 
+    bool approved
+  ) internal virtual override(ERC721, ERC721Approvable) {
+    super._setApprovalForAll(owner, operator, approved);
   }
 
   /**

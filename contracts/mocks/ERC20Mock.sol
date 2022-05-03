@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.0;
 
+import "../token/ERC20/extensions/ERC20Approvable.sol";
 import "../token/ERC20/extensions/ERC20Burnable.sol";
 import "../token/ERC20/extensions/ERC20Capped.sol";
 import "../token/ERC20/extensions/ERC20MetadataStorage.sol";
@@ -10,6 +11,7 @@ import "../token/ERC20/extensions/ERC20Pausable.sol";
 import "../token/ERC20/extensions/ERC20Permit.sol";
 
 contract ERC20Mock is 
+  ERC20Approvable,
   ERC20Burnable, 
   ERC20Capped,
   ERC20MetadataStorage,
@@ -52,6 +54,17 @@ contract ERC20Mock is
    */
   function unpause() public virtual {
     _unpause();
+  }
+
+  /**
+   * @dev Checks to see if appprovable before approving
+   */
+  function _approve(
+    address owner,
+    address spender,
+    uint256 amount
+  ) internal virtual override(ERC20, ERC20Approvable) {
+    super._approve(owner, spender, amount);
   }
 
   /**

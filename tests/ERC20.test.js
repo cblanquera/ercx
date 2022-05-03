@@ -15,16 +15,11 @@ async function deploy(name, ...params) {
   return contract
 }
 
-async function getSigners(name, ...params) {
-  //deploy the contract
-  const contract = await deploy(name, ...params)
-  
-  //get the signers
-  const signers = await ethers.getSigners()
+async function bindContract(key, name, contract, signers) {
   //attach contracts
   for (let i = 0; i < signers.length; i++) {
     const Contract = await ethers.getContractFactory(name, signers[i])
-    signers[i].withContract = await Contract.attach(contract.address)
+    signers[i][key] = await Contract.attach(contract.address)
   }
 
   return signers
@@ -42,13 +37,19 @@ function permit(from, to, amount, nonce) {
 
 describe('ERC20 Tests', function () {
   before(async function() {
+    const signers = await ethers.getSigners()
+    const token = await deploy('ERC20Mock', 'Test', 'TEST', ethers.utils.parseEther('1000000000'))
+    await bindContract('withContract', 'ERC20Mock', token, signers)
+    this.operator = await deploy('ERC20MockOperator', token.address)
+    await bindContract('withOperator', 'ERC20MockOperator', this.operator, signers)
+
     const [ 
       owner, 
       holder1, 
       holder2, 
       holder3, 
       holder4
-    ] = await getSigners('ERC20Mock', 'Test', 'TEST', ethers.utils.parseEther('1000000000'))
+    ] = signers;
 
     this.signers = {
       owner, 
@@ -56,13 +57,6 @@ describe('ERC20 Tests', function () {
       holder2, 
       holder3, 
       holder4
-    }
-
-    this.operator = await deploy('ERC20MockOperator', owner.withContract.address)
-    //attach contracts
-    for (const signer in this.signers) {
-      const Contract = await ethers.getContractFactory('ERC20MockOperator', this.signers[signer])
-      this.signers[signer].withOperator = await Contract.attach(this.operator.address)
     }
   })
 
