@@ -11,6 +11,13 @@ abstract contract ERC1155Approvable is ERC1155 {
   bool private _approved = true;
 
   /**
+   * @dev Returns true if approvable
+   */
+  function isApprovable() public virtual view returns(bool) {
+    return _approved;
+  }
+
+  /**
    * @dev Approve `operator` to operate on all of `owner` tokens
    *
    * Emits a {ApprovalForAll} event.

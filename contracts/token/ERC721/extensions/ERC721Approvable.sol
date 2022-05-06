@@ -11,6 +11,13 @@ abstract contract ERC721Approvable is ERC721 {
   bool private _approved = true;
 
   /**
+   * @dev Returns true if approvable
+   */
+  function isApprovable() public virtual view returns(bool) {
+    return _approved;
+  }
+
+  /**
    * @dev Checks to see if appprovable before approving
    */
   function _approve(
