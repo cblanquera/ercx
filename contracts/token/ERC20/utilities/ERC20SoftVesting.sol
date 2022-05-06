@@ -21,7 +21,7 @@ error InvalidCall();
 
 // ============ Contract ============
 
-contract ERC20Vesting is Pausable, AccessControl, ReentrancyGuard {
+contract ERC20SoftVesting is Pausable, AccessControl, ReentrancyGuard {
   //used in release()
   using Address for address;
 

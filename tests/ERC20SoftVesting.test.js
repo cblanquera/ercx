@@ -33,13 +33,13 @@ function getRole(name) {
   return '0x' + Buffer.from(ethers.utils.solidityKeccak256(['string'], [name]).slice(2), 'hex').toString('hex');
 }
 
-describe('ERC20Vesting Tests', function () {
+describe('ERC20SoftVesting Tests', function () {
   before(async function () {
     const signers = await ethers.getSigners()
     const token = await deploy('ERC20Mock', 'Test', 'TEST', ethers.utils.parseEther('1000000000'))
     await bindContract('withToken', 'ERC20Mock', token, signers)
-    const vesting = await deploy('ERC20Vesting', token.address, signers[0].address)
-    await bindContract('withVesting', 'ERC20Vesting', vesting, signers)
+    const vesting = await deploy('ERC20SoftVesting', token.address, signers[0].address)
+    await bindContract('withVesting', 'ERC20SoftVesting', vesting, signers)
 
     const [ owner, investor1, investor2 ] = signers
 

@@ -38,8 +38,8 @@ describe('ERC20VestingSale Tests', function () {
     const signers = await ethers.getSigners()
     const token = await deploy('ERC20Mock', 'Test', 'TEST', ethers.utils.parseEther('1000000000'))
     await bindContract('withToken', 'ERC20Mock', token, signers)
-    const vesting = await deploy('ERC20Vesting', token.address, signers[0].address)
-    await bindContract('withVesting', 'ERC20Vesting', vesting, signers)
+    const vesting = await deploy('ERC20SoftVesting', token.address, signers[0].address)
+    await bindContract('withVesting', 'ERC20SoftVesting', vesting, signers)
     const sale = await deploy('ERC20VestingSale', token.address, vesting.address, signers[0].address)
     await bindContract('withSale', 'ERC20VestingSale', sale, signers)
 
