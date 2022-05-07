@@ -66,6 +66,15 @@ contract ERC721HardStaking is Context, ReentrancyGuard, IERC721Receiver {
   // ============ Read Methods ============
 
   /**
+   * @dev Returns the number of tokens in `stakers`'s account.
+   */
+  function balanceOf(
+    address staker
+  ) public virtual view returns(uint256 balance) {
+    return stakers[staker].length;
+  }
+
+  /**
    * @dev Calculate how many a tokens an NFT earned
    */
   function releaseable(uint256 tokenId) public view returns(uint256) {
