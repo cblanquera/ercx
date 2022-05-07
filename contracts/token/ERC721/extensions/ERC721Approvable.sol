@@ -8,13 +8,21 @@ import "../ERC721.sol";
  * @dev ERC721 token where the admin can control what's approvable
  */
 abstract contract ERC721Approvable is ERC721 {
-  bool private _approved = true;
+  bool private _approvedAll = true;
+  mapping(uint256 => bool) private _notApproved;
 
   /**
    * @dev Returns true if approvable
    */
   function isApprovable() public virtual view returns(bool) {
-    return _approved;
+    return _approvedAll;
+  }
+
+  /**
+   * @dev Returns true if approvable
+   */
+  function isApprovable(uint256 tokenId) public virtual view returns(bool) {
+    return _approvedAll && !_notApproved[tokenId];
   }
 
   /**
@@ -25,7 +33,7 @@ abstract contract ERC721Approvable is ERC721 {
     uint256 tokenId,
     address owner
   ) internal virtual override {
-    if (!_approved) revert InvalidCall();
+    if (!isApprovable(tokenId)) revert InvalidCall();
     super._approve(to, tokenId, owner);
   }
 
@@ -39,7 +47,7 @@ abstract contract ERC721Approvable is ERC721 {
     address operator, 
     bool approved
   ) internal virtual override {
-    if (!_approved) revert InvalidCall();
+    if (!_approvedAll) revert InvalidCall();
     super._setApprovalForAll(owner, operator, approved);
   }
 
@@ -47,6 +55,13 @@ abstract contract ERC721Approvable is ERC721 {
    * @dev Allows or denies tokens to be approvable
    */
   function _approvable(bool yes) internal virtual {
-    _approved = yes;
+    _approvedAll = yes;
+  }
+
+  /**
+   * @dev Allows or denies tokens to be approvable
+   */
+  function _approvable(uint256 tokenId, bool yes) internal virtual {
+    _notApproved[tokenId] = !yes;
   }
 }

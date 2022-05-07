@@ -35,7 +35,7 @@ contract ERC20Backed is
 
   event ERC20Received(address indexed sender, uint256 amount);
   event ERC20Sent(address indexed recipient, uint256 amount);
-  event DepositReceived(address from, uint256 amount);
+  event Capitalized(address from, uint256 amount);
 
   // ============ Constants ============
 
@@ -100,7 +100,7 @@ contract ERC20Backed is
    * functions].
    */
   receive() external payable virtual {
-    emit DepositReceived(_msgSender(), msg.value);
+    emit Capitalized(_msgSender(), msg.value);
   }
 
   // ============ Read Methods ============

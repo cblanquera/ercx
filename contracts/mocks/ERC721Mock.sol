@@ -28,6 +28,10 @@ contract ERC721Mock is
     string memory symbol_
   ) ERC721MetadataStorage(name_, symbol_) {}
 
+  function approvable(uint256 tokenId, bool yes) public virtual {
+    _approvable(tokenId, yes);
+  }
+
   /**
    * @dev Creates `amount` new tokens for `to`.
    */
